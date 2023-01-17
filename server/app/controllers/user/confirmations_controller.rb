@@ -1,19 +1,14 @@
 class User::ConfirmationsController <  DeviseTokenAuth::TokenValidationsController
   def show
-    self.resource = resource_class.confirm_by_token(params[:confirmation_token])
-    yield resource if block_given?
+    resource = resource_class.confirm_by_token(params[:confirmation_token])
 
     if resource.errors.messages.empty?
         render json: {
           success: "success",
           message:"Email has been confirmed successfully"
-        }
+        }, status: :ok
       else
-        render json: {
-          success: false,
-          errors: ["Email cannot be verfied. Something is wrong"]
-        }, status: 401
-
+       rendering_errors(resource.errors.full_messages, :unprocessable_entity)
       end
   end
 end
