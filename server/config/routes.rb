@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   }
   post '/users/:id/follow', to: "follows#create"
   delete '/users/:id/unfollow', to: "follows#destroy"
-  get '/users/:id/followers', to: "follows#followers"
-  get '/users/:id/followings', to: "follows#followings"
+  get '/users/:id/:follow_option', to: "follows#index"
+
+  resources :tweets
 
   match '*unmatched', to: 'application#routing_error', via: :all
 end

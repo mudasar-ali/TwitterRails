@@ -1,11 +1,27 @@
 class FollowsController < ApplicationController
-  before_action :authenticate_user!
+  c
+
+  def index
+    @user = User.find(params[:id])
+    byebug
+    if @user && params[:follow_option] === "followers"
+      render json:{
+        followers: @user.followers
+      },status: :ok
+    elsif @user && params[:follow_option] === "followings"
+      render json:{
+        followings: @user.followings
+      },status: :ok
+    end
+  rescue ActiveRecord::RecordNotFound => e
+    rendering_errors("User not found",e.message, :not_found)
+  end
 
   def create
     @user = User.find(params[:id])
     current_user.followings << @user
   rescue ActiveRecord::RecordInvalid => e
-      rendering_errors("User not exist",e.errors.full_messages, :unprocessable_entity)
+      rendering_errors("User not exist",e.message, :unprocessable_entity)
   end
 
   def destroy
@@ -14,29 +30,7 @@ class FollowsController < ApplicationController
       following_data.destroy
     end
   rescue ActiveRecord::RecordNotFound => e
-      rendering_errors("something went wrong",e.errors.full_messages, :unprocessable_entity)
-  end
-
-  def followers
-    @user = User.find(params[:id])
-    if @user
-      render json:{
-        followers: @user.followers
-      }
-    end
-  rescue ActiveRecord::RecordNotFound => e
-    rendering_errors("User not found",e.errors.full_messages, :not_found)
-  end
-
-  def followings
-    @user = User.find(params[:id])
-    if @user
-      render json:{
-        followings: @user.followings
-      }
-    end
-  rescue ActiveRecord::RecordNotFound => e
-    rendering_errors("User not found",e.errors.full_messages, :not_found)
+      rendering_errors("something went wrong",e.message, :unprocessable_entity)
   end
 
 end

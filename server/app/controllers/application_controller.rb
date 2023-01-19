@@ -3,7 +3,7 @@ class ApplicationController < ActionController::API
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  rescue_from StandardError, with: :internal_server_error
+  # rescue_from StandardError, with: :internal_server_error
 
 
   def configure_permitted_parameters
@@ -13,12 +13,12 @@ class ApplicationController < ActionController::API
 
   def rendering_errors(message,errors,status)
     render json: {
-      message: message
+      message: message,
       errors: errors
     }, status: status
   end
 
-   def routing_error
+  def routing_error
     render json: {
       error:"Route does not match"
     }, status: :not_found
