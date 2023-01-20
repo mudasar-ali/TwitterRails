@@ -1,5 +1,5 @@
 class TweetsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :set_tweet, only: %i[show update destroy]
 
   def index
     @tweets=Tweet.all
@@ -9,7 +9,6 @@ class TweetsController < ApplicationController
   end
 
   def create
-    byebug
     @tweet = current_user.tweets.create!(tweet_params)
     if @tweet
       render json: {
@@ -21,41 +20,34 @@ class TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
-    if @tweet
       render json: {
         post: @tweet
       },status: :ok
-    end
-  rescue ActiveRecord::RecordNotFound=> e
-    rendering_errors("Tweet can not be found", e.message, :unprocessable_entity)
   end
 
   def update
-     @tweet = Tweet.find(params[:id])
      if @tweet && @tweet.update!(tweet_params)
       render json: {
         post: @tweet
       },status: :ok
      end
-  rescue ActiveRecord::RecordNotFound=> e
-    rendering_errors("Tweet can not be found", e.message, :unprocessable_entity)
   rescue ActiveRecord::RecordInvalid => e
       rendering_errors("Tweet can not be updated",e.message, :unprocessable_entity)
   end
 
   def destroy
-    @tweet = Tweet.find(params[:id])
-     if @tweet
-      @tweet.destroy
-     end
-  rescue ActiveRecord::RecordNotFound=> e
-    rendering_errors("Tweet can not be deleted", e.message, :unprocessable_entity)
+    @tweet.destroy
   end
 
   private
     def tweet_params
       params.permit(:caption, {images_attributes: [:id, :post_id, :pictures]})
+    end
+
+    def set_tweet
+      @tweet = Tweet.find(params[:id])
+    rescue ActiveRecord::RecordNotFound=> e
+      rendering_errors("Tweet can not be deleted", e.message, :not_found)
     end
 
 end

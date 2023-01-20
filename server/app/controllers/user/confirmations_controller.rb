@@ -1,4 +1,5 @@
 class User::ConfirmationsController <  DeviseTokenAuth::TokenValidationsController
+  skip_before_action :authenticate_user!
   def show
     resource = resource_class.confirm_by_token(params[:confirmation_token])
     if resource.errors.messages.empty?
