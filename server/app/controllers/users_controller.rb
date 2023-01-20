@@ -1,32 +1,23 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: %i[show follow_detail follow unfollow]
+  before_action :find_user, only: %i[follow_detail follow unfollow]
   def show
-    if @user
-      render json: {
-        user: @user,
-        posts: @user.tweets,
-        like: @user.likes,
-        comments: @user.comments
-      }
-    end
+    @user = User.includes(:followers, :followings, tweets: [:likes, comments: [:user]]).find(params[:id])
+  rescue ActiveRecord::RecordNotFound => e
+    rendering_errors("User not found",e.message, :not_found)
   end
 
   def follow_detail
     if params[:follow_option] === "followers"
-      render json:{
-        followers: @user.followers
-      },status: :ok
+      @users = @user.followers
       elsif params[:follow_option] === "followings"
-      render json:{
-        followings: @user.followings
-      },status: :ok
+      @users = @user.followings
     end
   end
 
   def follow
     current_user.followings << @user
   rescue ActiveRecord::RecordInvalid => e
-      rendering_errors("User not exist",e.message, :unprocessable_entity)
+      rendering_errors("User can not be followed",e.message, :unprocessable_entity)
   end
 
   def unfollow
