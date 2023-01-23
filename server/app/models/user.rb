@@ -17,4 +17,12 @@ class User < ActiveRecord::Base
 
   validates :username, uniqueness: { case_sensitive: true }
   validates :username, :name, presence: true
+
+
+  def delete_previous_picture(previous_img_url,new_img)
+    if previous_img_url && !new_img.nil?
+      public_id= previous_img_url.split('/').last.split('.')[0]
+      Cloudinary::Uploader.destroy(public_id)
+    end
+  end
 end

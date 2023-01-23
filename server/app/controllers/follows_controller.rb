@@ -1,5 +1,5 @@
 class FollowsController < ApplicationController
-  before_action :find_user, only: %i[index create]
+  before_action :find_user, only: %i[index]
 
   def index
     if params[:option] === "followers"
@@ -10,7 +10,7 @@ class FollowsController < ApplicationController
   end
 
   def create
-    current_user.followings << @user
+    current_user.following_users.create!({following_id: params[:user_id]})
   rescue ActiveRecord::RecordInvalid => e
       rendering_errors("User can not be followed",e.message, :unprocessable_entity)
   end

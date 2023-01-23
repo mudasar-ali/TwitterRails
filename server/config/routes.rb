@@ -4,10 +4,11 @@ Rails.application.routes.draw do
     registrations: 'user/registrations',
     sessions: "user/sessions"
   }
-  resources :users, only: [:show] do
-   resources :follows, only: [:index, :create]
-   member do
-    delete "unfollow", to: "follows#destroy"
+  resources :users, only: [:show, :update] do
+   resources :follows, only: [:index, :create] do
+    collection do
+     delete "unfollow", to: "follows#destroy"
+    end
    end
   end
   resources :tweets do
