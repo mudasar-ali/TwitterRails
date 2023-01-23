@@ -5,16 +5,17 @@ Rails.application.routes.draw do
     sessions: "user/sessions"
   }
   resources :users, only: [:show] do
-    member do
-      get '/:follow_option', to: "users#follow_detail"
-      post :follow
-      delete :unfollow
-    end
+   resources :follows, only: [:index, :create]
+   member do
+    delete "unfollow", to: "follows#destroy"
+   end
   end
   resources :tweets do
     resources :comments
-    post 'like', to: "likes#create"
-    delete "unlike", to: "likes#destroy"
+    member do
+      post 'like', to: "likes#create"
+      delete "unlike", to: "likes#destroy"
+    end
   end
 
   match '*unmatched', to: 'application#routing_error', via: :all

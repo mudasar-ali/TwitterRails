@@ -1,6 +1,3 @@
 json.tweet do
-  json.partial! 'tweets/tweet', tweet: @tweet
-  json.user do
-    json.partial! "users/user", user: @tweet.user
-  end
+  json.partial! 'tweets/tweet_with_extra_data', tweet: @tweet
 end
