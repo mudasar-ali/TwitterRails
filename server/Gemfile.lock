@@ -104,6 +104,8 @@ GEM
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     erubi (1.12.0)
+    faker (2.22.0)
+      i18n (>= 1.8.11, < 2)
     ffi (1.15.5)
     globalid (1.0.0)
       activesupport (>= 5.0)
@@ -231,6 +233,7 @@ DEPENDENCIES
   cloudinary
   debug
   devise_token_auth
+  faker
   jbuilder
   pg (~> 1.1)
   puma (~> 5.0)

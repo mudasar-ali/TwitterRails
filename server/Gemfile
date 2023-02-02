@@ -51,4 +51,5 @@ gem 'devise_token_auth'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'cloudinary'
 gem 'carrierwave', '~> 2.2', '>= 2.2.3'
+gem 'faker'
 
