@@ -25,7 +25,7 @@ class TweetsController < ApplicationController
 
   private
     def tweet_params
-      params.permit(:caption, {images_attributes: [:id, :post_id, :pictures]})
+      params.permit(:caption,:pictures)
     end
 
     def set_tweet

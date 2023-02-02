@@ -2,7 +2,7 @@ class LikesController < ApplicationController
   before_action :set_tweet, only: %i[create destroy]
 
   def create
-  current_user.likes.create!(tweet_id: params[:id])
+  @like = current_user.likes.create!(tweet_id: params[:id])
   rescue ActiveRecord::RecordInvalid=> e
     rendering_errors("tweet can not be liked", e.message, :unprocessable_entity)
   end

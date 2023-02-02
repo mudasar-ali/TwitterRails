@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[show update destroy]
 
   def create
-    @comment = current_user.comments.create!(comment_params, tweet_id: params[:tweet_id])
+    @comment = current_user.comments.create!(comment_params)
   rescue ActiveRecord::RecordInvalid => e
     rendering_errors("Comment can not be created", e.message, :unprocessable_entity)
   end
@@ -29,6 +29,6 @@ class CommentsController < ApplicationController
   end
 
   def comment_params
-    params.permit(:text)
+    params.permit(:text, :tweet_id)
   end
 end

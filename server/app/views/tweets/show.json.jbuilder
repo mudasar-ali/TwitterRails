@@ -1,3 +1,6 @@
 json.tweet do
-  json.partial! 'tweets/tweet_with_extra_data', tweet: @tweet
+  json.partial! 'tweets/tweet', tweet: @tweet
+end
+json.comments do
+
 end

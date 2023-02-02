@@ -2,7 +2,7 @@
 
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :confirmable
   include DeviseTokenAuth::Concerns::User
 
   mount_uploader :prof_pic, ImageUploader
@@ -25,4 +25,7 @@ class User < ActiveRecord::Base
       Cloudinary::Uploader.destroy(public_id)
     end
   end
+
+  scope :search, -> (term) { where("username like :term OR name like :term", term: "%#{term}%") }
+
 end

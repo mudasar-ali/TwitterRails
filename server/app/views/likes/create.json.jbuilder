@@ -1,1 +1,1 @@
-json.count @tweet.likes.count
+json.partial! "likes/like",like:@like

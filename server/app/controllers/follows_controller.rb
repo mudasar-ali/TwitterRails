@@ -4,7 +4,7 @@ class FollowsController < ApplicationController
   def index
     if params[:option] === "followers"
       @users = @user.followers
-      elsif params[:option] === "followings"
+      elsif params[:option] === "following"
       @users = @user.followings
     end
   end
@@ -16,7 +16,7 @@ class FollowsController < ApplicationController
   end
 
   def destroy
-    following_data = current_user.following_users.find_by!(following_id: params[:id])
+    following_data = current_user.following_users.find_by!(following_id: params[:user_id])
     following_data.destroy!
   rescue ActiveRecord::RecordNotFound => e
       rendering_errors("something went wrong",e.message, :unprocessable_entity)

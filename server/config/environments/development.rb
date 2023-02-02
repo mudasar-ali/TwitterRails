@@ -46,5 +46,5 @@ Rails.application.configure do
     user_name: 'mudassarsabirali@gmail.com',
     password: 'ayhphyqynlnqwfwz'
   }
-  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+  config.action_mailer.default_url_options = { host: 'localhost:3001' }
 end

@@ -1,3 +1,9 @@
 json.tweet do
-  json.partial! 'tweets/only_tweet_data', tweet: @tweet
+  json.id @tweet.id
+  json.caption @tweet.caption
+  json.created_at @tweet.created_at
+  json.user do
+      json.partial! 'users/user', user: @tweet.user
+  end
+
 end

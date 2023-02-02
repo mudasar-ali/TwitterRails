@@ -1,3 +1,3 @@
 json.tweet do
-  json.partial! 'tweets/only_tweet_data', tweet: @tweet
+  json.partial! 'tweets/tweet', tweet: @tweet
 end

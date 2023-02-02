@@ -6,7 +6,8 @@ class User::ConfirmationsController <  DeviseTokenAuth::TokenValidationsControll
         render json: {
           message:"Email has been confirmed successfully"
         }, status: :ok
+    else
+    rendering_errors(nil,resource.errors.full_messages, :unprocessable_entity)
     end
-  rendering_errors("Email can not be verified",resource.errors.full_messages, :unprocessable_entity)
   end
 end

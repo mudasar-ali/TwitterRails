@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    @user = User.includes(:followers, :followings, tweets: [:likes, comments: [:user]]).find(params[:id])
+    @user = User.includes(:followers, :followings, tweets: [:likes, comments: [:user]]).find_by!(id:params[:id])
   rescue ActiveRecord::RecordNotFound => e
     rendering_errors("User not found",e.message, :not_found)
   end
@@ -13,6 +13,10 @@ class UsersController < ApplicationController
     rendering_errors("User can not be updated",e.message, :not_found)
   rescue ActiveRecord::RecordInvalid => e
     rendering_errors("User can not be updated",e.message, :unprocessable_entity)
+  end
+
+  def search
+    @users = User.search("%#{params[:value]}%")
   end
 
   private
