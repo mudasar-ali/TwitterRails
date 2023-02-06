@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require_relative "../helpers/delete_objects"
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
@@ -21,8 +21,8 @@ class User < ActiveRecord::Base
 
   def delete_previous_picture(previous_img_url,new_img)
     if previous_img_url && !new_img.nil?
-      public_id= previous_img_url.split('/').last.split('.')[0]
-      Cloudinary::Uploader.destroy(public_id)
+      obj= previous_img_url.split('/').last
+      delete_objects_from_s3(obj)
     end
   end
 
