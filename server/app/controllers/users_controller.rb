@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    @user.delete_previous_picture(@user.prof_pic.url,params[:prof_pic])
     @user.update!(update_params)
   rescue ActiveRecord::RecordNotFound => e
     rendering_errors("User can not be updated",e.message, :not_found)
