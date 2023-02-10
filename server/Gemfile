@@ -14,7 +14,7 @@ gem "puma", "~> 5.0"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
+gem "elasticsearch", "> 7.14"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -55,4 +55,7 @@ gem 'mini_magick'
 gem 'fog-aws'
 gem 'faker'
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem "searchkick"
+
 

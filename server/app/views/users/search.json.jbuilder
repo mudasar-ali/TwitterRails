@@ -11,3 +11,9 @@ json.user @users do |user|
     json.user u.id
   end
 end
+
+json.tweets do
+  json.partial! 'tweets/tweet', collection: @tweets, as: :tweet
+end
+
+

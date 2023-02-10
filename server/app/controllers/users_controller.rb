@@ -15,11 +15,14 @@ class UsersController < ApplicationController
   end
 
   def search
-    @users = User.search("%#{params[:value]}%")
+    @users = User.search(params[:value], fields:[:name, :username], match: :text_middle)
+    if params[:tweet].present?
+      @tweets = Tweet.search(params[:value], fields: [:caption], match: :text_middle).includes(:user,:likes, comments: [:user])
+    end
   end
 
   private
     def update_params
-      params.permit(:name, :username, :prof_pic, :bio)
+      params.permit(:name, :username, :prof_pic, :bio, :tweet)
     end
 end

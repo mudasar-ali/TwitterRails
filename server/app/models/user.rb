@@ -3,6 +3,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+  searchkick text_middle: [:name, :username]
+
+  after_commit :reindex_user, on: [:create]
 
   mount_uploader :prof_pic, ImageUploader
 
@@ -17,6 +20,8 @@ class User < ActiveRecord::Base
   validates :username, uniqueness: { case_sensitive: true }
   validates :username, :name, presence: true
 
-  scope :search, -> (term) { where("username like :term OR name like :term", term: "%#{term}%") }
+  def reindex_user
+    self.reindex
+  end
 
 end
