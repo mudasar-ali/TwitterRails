@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :allow_cors
 
-  rescue_from StandardError, with: :internal_server_error
+  # rescue_from StandardError, with: :internal_server_error
 
   def allow_cors
     headers['Access-Control-Allow-Origin'] = 'http://localhost:3001'

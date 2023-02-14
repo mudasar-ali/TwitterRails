@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :update] do
     collection do
       get :search
+      post :transcribe
     end
    resources :follows, only: [:index, :create] do
     collection do

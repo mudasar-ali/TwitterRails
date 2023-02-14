@@ -59,3 +59,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem "searchkick"
 
 
+gem "aws-sdk-transcribestreamingservice"
+gem 'http-2'
+
+

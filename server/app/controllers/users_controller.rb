@@ -21,8 +21,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def transcribe
+    path =params[:audio_file].tempfile.path
+    convert_text= Transcribe.convert(path)
+    render json: {
+      convert_text: convert_text
+    }
+  end
+
   private
     def update_params
-      params.permit(:name, :username, :prof_pic, :bio, :tweet)
+      params.permit(:name, :username, :prof_pic, :bio, :tweet, :audio_file)
     end
 end

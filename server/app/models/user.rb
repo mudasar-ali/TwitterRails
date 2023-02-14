@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   searchkick text_middle: [:name, :username]
 
-  after_commit :reindex_user, on: [:create]
+  after_commit :reindex_user, on: [:create, :update]
 
   mount_uploader :prof_pic, ImageUploader
 
@@ -23,5 +23,12 @@ class User < ActiveRecord::Base
   def reindex_user
     self.reindex
   end
+  def search_data
+    {
+      name: name,
+      username: username
+    }
+  end
+
 
 end
